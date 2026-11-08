@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#176b45">
+  <meta name="description" content="Inventario de cocina y lista de mercado semanal.">
+  <title>Mi Cocina – Mercado inteligente</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div><h1>Mi cocina</h1><p>Control de existencias y mercado semanal</p></div>
+      <span class="pill green">Sistema activo</span>
+    </header>
+
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab active" data-scene="inventory"><span>▤</span> Inventario</button>
+      <button class="tab" data-scene="shopping"><span>🛒</span> Compras</button>
+    </nav>
+
+    <section id="inventoryScene">
+      <div class="section-heading"><h2>📋 Inventario semanal</h2><span class="pill green">Revisión</span></div>
+      <div class="stats">
+        <div><strong id="countBuy" class="danger">0</strong><small>Agotados</small></div>
+        <div><strong id="countLow" class="warning">0</strong><small>Por terminar</small></div>
+        <div><strong id="countHave" class="success">0</strong><small>Disponibles</small></div>
+      </div>
+      <div class="progress-label"><small>Inventario revisado</small><small id="reviewProgress">0/0</small></div>
+      <div class="progress"><span id="progressBar"></span></div>
+
+      <label class="field-label" for="filterSelect">Filtrar productos</label>
+      <select id="filterSelect">
+        <option value="all">Mostrar todos</option>
+        <option value="buy">Agotados</option>
+        <option value="low">Por terminar</option>
+        <option value="have">Disponibles</option>
+        <option value="unset">Sin revisar</option>
+      </select>
+      <div class="products-heading">
+        <div><h3>Productos por categoría</h3><small id="visibleCount">0 productos visibles</small></div>
+        <div class="inline-actions"><button class="link-btn" id="expandAll">Expandir</button><button class="link-btn" id="collapseAll">Contraer</button></div>
+      </div>
+      <div id="inventoryCategories"></div>
+    </section>
+
+    <section id="shoppingScene" hidden>
+      <div class="section-heading"><h2>🛒 Lista de compras</h2><span class="pill green">En curso</span></div>
+      <div id="shoppingContent"></div>
+    </section>
+
+    <section class="manage">
+      <button class="manage-toggle" id="manageToggle" aria-expanded="false"><span>⚙ Administrar lista maestra</span><span id="manageChevron">⌄</span></button>
+      <div id="manageContent" hidden>
+        <p class="hint">Los cambios se aplican a la lista maestra. Los productos nuevos se incorporan al inventario y a las compras futuras.</p>
+        <h3>Agregar producto</h3>
+        <input id="newProduct" type="text" placeholder="Escribe el nombre del producto" maxlength="70">
+        <select id="newCategory"></select>
+        <button class="primary full" id="addProduct">＋ Agregar producto</button>
+        <hr>
+        <div class="products-heading"><h3>Dar de baja productos</h3><small id="masterCount"></small></div>
+        <p class="hint compact">Selecciona la papelera para eliminar un producto.</p>
+        <div id="masterCategories"></div>
+      </div>
+    </section>
+
+    <section class="backup">
+      <h3>Copias de seguridad</h3>
+      <div class="two-buttons">
+        <button class="outline" id="copyInventory">▢ Copiar inventario</button>
+        <button class="outline" id="copyShopping">▢ Copiar compras</button>
+      </div>
+      <div class="two-buttons">
+        <button class="outline" id="exportBackup">↓ Descargar copia</button>
+        <button class="outline" id="importBackup">↑ Restaurar copia</button>
+        <input id="backupFile" type="file" accept="application/json,.json" hidden>
+      </div>
+    </section>
+
+    <footer id="footerActions"></footer>
+    <p class="footnote" id="footnote"></p>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
